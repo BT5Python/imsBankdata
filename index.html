@@ -132,7 +132,7 @@ async function loginSuccess(event) {
   const user = event.target.admin.value.trim();
   const pass = event.target.kodiklatau.value.trim();
 
-  const response = await fetch("https://script.google.com/macros/s/AKfycbyPZaqoP6oyIocTSHY7jaeJGBb0ePOaUQG80l15RJVYvONu-TgK1x3Q8QnlNJhiEvgL/exec", {
+  const response = await fetch("https://script.google.com/macros/s/AKfycbzRRWFjwS7MLX5BoxKu9hD0Wsgkxq78mnyF2jBuKNKtS8wExiShlXlXVIQKBiaoW10h/exec", {
     method: "POST",
     body: new URLSearchParams({
       username: user,
