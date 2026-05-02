@@ -243,12 +243,6 @@ if (sessionStorage.getItem("isLogin") !== "true") {
   window.location.href = "index.html";
 }
 </script>
-<form onsubmit="return gantiPassword(event)">
-  <input type="text" name="username" placeholder="Username" required>
-  <input type="password" name="oldPassword" placeholder="Password Lama" required>
-  <input type="password" name="newPassword" placeholder="Password Baru" required>
-  <button type="submit">Ganti Password</button>
-</form>
 <script>
 async function gantiPassword(event) {
   event.preventDefault();
