@@ -146,7 +146,7 @@ function openFullscreen() {
 
 document.addEventListener("click", function() {
   openFullscreen();
-}, { once:true });
+}, { once:true });  
 </script>
 <script>
 // Fullscreen untuk Android WebView / PWA
@@ -201,6 +201,11 @@ function tampilkanTanggal() {
 // update tiap detik biar live
 setInterval(tampilkanTanggal, 1000);
 tampilkanTanggal();
+</script>
+  <script>
+if (sessionStorage.getItem("isLogin") !== "true") {
+  window.location.href = "index.html";
+}
 </script>
 </body>
 </html>
