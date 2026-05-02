@@ -126,24 +126,27 @@ button:hover {
 </div>
 
 <script>
-function loginSuccess(event) {
-  event.preventDefault(); // Mencegah form reload
+async function loginSuccess(event) {
+  event.preventDefault();
 
-  // Ambil nilai form  
   const user = event.target.admin.value.trim();
   const pass = event.target.kodiklatau.value.trim();
 
-  // USERNAME & PASSWORD (silakan ganti sesuai kebutuhan)
-  const correctUser = "admin";
-  const correctPass = "kodiklatau";
+  const response = await fetch("https://script.google.com/macros/s/AKfycbyPZaqoP6oyIocTSHY7jaeJGBb0ePOaUQG80l15RJVYvONu-TgK1x3Q8QnlNJhiEvgL/exec", {
+    method: "POST",
+    body: new URLSearchParams({
+      username: user,
+      password: pass
+    })
+  });
 
-  if (user === correctUser && pass === correctPass) {
-      // Redirect ke halaman setelah login berhasil
-      window.location.href = "imsBankdata.html";  
-      return false;
+  const result = await response.json();
+
+  if (result.status === "success") {
+    sessionStorage.setItem("isLogin", "true");
+    window.location.href = "imsBankdata.html";
   } else {
-      alert("Username atau Password salah!");
-      return false;
+    alert("Username atau Password salah!");
   }
 }
 </script>
