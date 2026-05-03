@@ -138,6 +138,7 @@ async function loginSuccess(event) {
   const sendLogin = async () => {
     const response = await fetch("https://script.google.com/macros/s/AKfycbwhCBqfH24yfDmM_QiD4Y98942oQfoaxlT94TASzBhgwmTadr4p_jCzArvvAuQBpplf/exec", {
   method: "POST",
+  mode: "no-cors",
   body: new URLSearchParams({
     email: email,
     password: pass,
