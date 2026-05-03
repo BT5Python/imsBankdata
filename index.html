@@ -136,7 +136,7 @@ async function loginSuccess(event) {
   let lon = "";
 
   const sendLogin = async () => {
-    const response = await fetch("URL_APPS_SCRIPT_KAMU", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycby7K2xY5mjjw_dA7iyKL6lcU_UnTUkhn7XL8cAQnVl6sEpVoB4naA65rYmHBUDKNwwZ/exec", {
       method: "POST",
       body: new URLSearchParams({
         email,
