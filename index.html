@@ -119,7 +119,7 @@ button:hover {
   <h1>INTEGRATED</h1>
   <h1>MONITORING SYSTEM</h1>
   <form onsubmit="return loginSuccess(event)">
-    <input type="text" name="admin" placeholder="Username" required autocomplete="off">
+    <input type="email" name="email" placeholder="Email" required autocomplete="off">
     <input type="password" name="kodiklatau" placeholder="Password" required autocomplete="off">
     <button type="submit">Login</button>
   </form>
@@ -129,27 +129,47 @@ button:hover {
 async function loginSuccess(event) {
   event.preventDefault();
 
-  const user = event.target.admin.value.trim();
-  const pass = event.target.kodiklatau.value.trim();
+  const email = event.target.email.value;
+  const pass = event.target.kodiklatau.value;
 
-  const response = await fetch("https://script.google.com/macros/s/AKfycbzRRWFjwS7MLX5BoxKu9hD0Wsgkxq78mnyF2jBuKNKtS8wExiShlXlXVIQKBiaoW10h/exec", {
+  let lat = "";
+  let lon = "";
+
+  // Ambil lokasi
+  if (navigator.geolocation) {
+    await new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          lat = pos.coords.latitude;
+          lon = pos.coords.longitude;
+          resolve();
+        },
+        () => resolve()
+      );
+    });
+  }
+
+  const response = await fetch("URL_APPS_SCRIPT_KAMU", {
     method: "POST",
     body: new URLSearchParams({
-      username: user,
-      password: pass
+      email: email,
+      password: pass,
+      device: navigator.userAgent,
+      latitude: lat,
+      longitude: lon
     })
   });
 
   const result = await response.json();
 
   if (result.status === "success") {
-    sessionStorage.setItem("isLogin", "true");
+    sessionStorage.setItem("login", "true");
     window.location.href = "imsBankdata.html";
   } else {
-    alert("Username atau Password salah!");
+    alert("Login gagal!");
   }
 }
-</script>
+</script>    
 <script>
 // Fullscreen untuk Android WebView / PWA
 function forceFullscreen() {
