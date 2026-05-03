@@ -135,38 +135,40 @@ async function loginSuccess(event) {
   let lat = "";
   let lon = "";
 
-  // Ambil lokasi
-  if (navigator.geolocation) {
-    await new Promise((resolve) => {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          lat = pos.coords.latitude;
-          lon = pos.coords.longitude;
-          resolve();
-        },
-        () => resolve()
-      );
+  const sendLogin = async () => {
+    const response = await fetch("URL_APPS_SCRIPT_KAMU", {
+      method: "POST",
+      body: new URLSearchParams({
+        email,
+        password: pass,
+        device: navigator.userAgent,
+        latitude: lat,
+        longitude: lon
+      })
     });
-  }
 
-  const response = await fetch("https://script.google.com/macros/s/AKfycbxG8xHSKnr9d_NrShZ_HScpTF_e8_tI-8zHCm_kLuzoGn78uZrtHGnIskKauJgnOklS/exec", {
-    method: "POST",
-    body: new URLSearchParams({
-      email: email,
-      password: pass,
-      device: navigator.userAgent,
-      latitude: lat,
-      longitude: lon
-    })
-  });
+    const result = await response.json();
 
-  const result = await response.json();
+    if (result.status === "success") {
+      sessionStorage.setItem("login", "true");
+      window.location.href = "imsBankdata.html";
+    } else {
+      alert("Login gagal!");
+    }
+  };
 
-  if (result.status === "success") {
-    sessionStorage.setItem("login", "true");
-    window.location.href = "imsBankdata.html";
+  // lokasi optional (tidak boleh block login)
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        lat = pos.coords.latitude;
+        lon = pos.coords.longitude;
+        sendLogin();
+      },
+      () => sendLogin()
+    );
   } else {
-    alert("Login gagal!");
+    sendLogin();
   }
 }
 </script>    
