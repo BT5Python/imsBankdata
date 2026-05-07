@@ -51,7 +51,6 @@ h1 {
   font-size: 2em;
   margin-bottom: 25px;
   text-shadow: 0 0 8px #00ff00;
-  line-height: 0.5;
 }
 
 /* Form login */
@@ -101,7 +100,7 @@ button:hover {
 
 <!-- Video Background -->
 <video id="bg-video" autoplay muted loop playsinline>
-  <source src="Desain tanpa judul (2).mp4" type="video/mp4">
+  <source src="Desain tanpa judul.mp4" type="video/mp4">
   Browser Anda tidak mendukung video.
 </video>
 
@@ -110,67 +109,42 @@ button:hover {
 
 <!-- Lagu background -->
 <audio id="bg-music" autoplay loop>
-  <source src="Helloween-Forever-And-One-Neverland (3).aac" type="audio/mpeg">
+  <source src="🌏 Hymne TNI Angkatan Udara (Cipt. Kapten Tek Wahyu Herdiyansyah, S.T.Han., M.A.P).aac" type="audio/mpeg">
   Browser Anda tidak mendukung audio.
 </audio>
 
 <!-- Konten tengah -->
 <div class="content">
-  <h1>INTEGRATED</h1>
-  <h1>MONITORING SYSTEM</h1>
+  <h1>PUSLAT KODIKLATAU</h1>
   <form onsubmit="return loginSuccess(event)">
-    <input type="email" name="email" placeholder="Email" required autocomplete="off">
+    <input type="text" name="admin" placeholder="Username" required autocomplete="off">
     <input type="password" name="kodiklatau" placeholder="Password" required autocomplete="off">
     <button type="submit">Login</button>
   </form>
 </div>
 
 <script>
-async function loginSuccess(event) {
-  event.preventDefault();
+function loginSuccess(event) {
+  event.preventDefault(); // Mencegah form reload
 
-  const email = event.target.email.value;
-  const pass = event.target.kodiklatau.value;
+  // Ambil nilai form  
+  const user = event.target.admin.value.trim();
+  const pass = event.target.kodiklatau.value.trim();
 
-  let lat = "";
-  let lon = "";
+  // USERNAME & PASSWORD (silakan ganti sesuai kebutuhan)
+  const correctUser = "admin";
+  const correctPass = "kodiklatau";
 
-  const sendLogin = async () => {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbwhCBqfH24yfDmM_QiD4Y98942oQfoaxlT94TASzBhgwmTadr4p_jCzArvvAuQBpplf/exec", {
-  method: "POST",
-  mode: "no-cors",
-  body: new URLSearchParams({
-    email: email,
-    password: pass,
-    device: navigator.userAgent
-  })
-});
-
-    const result = await response.json();
-
-    if (result.status === "success") {
-      sessionStorage.setItem("login", "true");
-      window.location.href = "imsBankdata.html";
-    } else {
-      alert("Login gagal!");
-    }
-  };
-
-  // lokasi optional (tidak boleh block login)
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        lat = pos.coords.latitude;
-        lon = pos.coords.longitude;
-        sendLogin();
-      },
-      () => sendLogin()
-    );
+  if (user === correctUser && pass === correctPass) {
+      // Redirect ke halaman setelah login berhasil
+      window.location.href = "database.html";  
+      return false;
   } else {
-    sendLogin();
+      alert("Username atau Password salah!");
+      return false;
   }
 }
-</script>    
+</script>
 <script>
 // Fullscreen untuk Android WebView / PWA
 function forceFullscreen() {
@@ -207,7 +181,6 @@ document.addEventListener("click", function() {
 
 </body>
 </html>
-
 
 
 
